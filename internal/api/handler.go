@@ -77,10 +77,23 @@ func ProcessHandler(w http.ResponseWriter, r *http.Request) {
     w.Write(jsonResp)
 }
 
+func HealthHandler(w http.ResponseWriter, r *http.Request) {
+    if r.Method != "GET" {
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusMethodNotAllowed)
+    }
+    
+    // Simulate health fetch
+    
+    w.Header().Set("Content-Type", "application/json")
+    w.WriteHeader(http.StatusOK)
+}
+
 func StartServer() {
 	path := fmt.Sprintf("/%s/%s", apiType, apiVersion)
     http.HandleFunc(path + "/validate", ValidateHandler)
     http.HandleFunc(path + "/process", ProcessHandler)
+    http.HandleFunc(path + "/health", HealthHandler)
 
     log.Printf("Listening on %s", port)
     err := http.ListenAndServe(port, nil)

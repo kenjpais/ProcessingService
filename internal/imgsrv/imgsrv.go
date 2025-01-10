@@ -2,23 +2,24 @@ package imgsrv
 
 import (
     "log"
-    "time"
     "context"
+    "time"
 )
 
 type ImgProcessResponse struct {
-    Result string `json:"result"`
+    Result string
 }
 
 type Image struct {
-    ID           string `json:"id"`
-    ResourcePath string `json:"resource_path"`
+    ID           string 
+    ResourcePath string
 }
 
+// ImageProcessingService implements ImageProcessingServiceInterface
 type ImageProcessingService struct {}
 
-func NewImageProcessingService() *ImageProcessingService {
-    return &ImageProcessingService{}
+func NewImageProcessingService() ImageProcessingServiceInterface {
+    return NewImageProcessingServiceProxy(56) // Proxy is now returned as ImageProcessingServiceInterface
 }
 
 func (s *ImageProcessingService) Validate(ctx context.Context, img *Image) error {
